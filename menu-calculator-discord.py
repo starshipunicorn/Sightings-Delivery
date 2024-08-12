@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Discord webhook URL (replace with your own webhook URL)
-WEBHOOK_URL = "https://discord.com/api/webhooks/1144358837051199508/3nRSaDRj7nzTYWcFIlQOIqCHpEgLLt0EpQLHg7yTvqAXtBWsqcZMXpgfjhxwA68e97_L"
+WEBHOOK_URL = "https://discord.com/api/webhooks/your_webhook_url_here"
 
 # Menu Items with their Prices
 menu = {
@@ -131,7 +131,8 @@ if st.button("Submit Order"):
     st.subheader("Order Summary")
     st.markdown(order_summary)
 
-    if send_order_to_discord(order_summary, total_price):
-        st.success("Order sent successfully to Sightings Staff!")
+    if send_order_to_discord(phone_number, order_summary, total_price):
+        st.success("Order sent successfully to Discord!")
     else:
-        st.error("Failed to send order to Sightins Staff.")
+        st.error("Failed to send order to Discord.")
+
