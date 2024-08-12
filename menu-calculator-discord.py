@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Discord webhook URL (replace with your own webhook URL)
-WEBHOOK_URL = "https://discord.com/api/webhooks/1144358837051199508/3nRSaDRj7nzTYWcFIlQOIqCHpEgLLt0EpQLHg7yTvqAXtBWsqcZMXpgfjhxwA68e97_L"
+WEBHOOK_URL = "https://discord.com/api/webhooks/1272625772577951856/bzwIwPK6IYTPmhlD6bcLoB2thA0ha-I9nIgn1SNV-J1yTvIA59a7NVAgseSouduAUguU"
 
 # Menu Items with their Prices
 menu = {
