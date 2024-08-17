@@ -52,18 +52,21 @@ def calculate_total(order):
     return round(subtotal, 2), round(total, 2)
 
 # Function to send order to Discord
-def send_order_to_discord(phone_number, order_summary, total_price):
+def send_order_to_discord(phone_number, delivery_location, order_summary, total_price):
     data = {
-        "content": f"New Order Received:\n\nPhone Number: {phone_number}\n\n{order_summary}\n**Total: ${total_price}**"
+        "content": f"New Order Received:\n\nPhone Number: {phone_number}\nDelivery Location: {delivery_location}\n\n{order_summary}\n**Total: ${total_price}**"
     }
     response = requests.post(WEBHOOK_URL, json=data)
     return response.status_code == 204
 
 # Streamlit Interface
-st.title("🚀 Space-Themed Menu Calculator 🌌")
+st.title("🚀 Sightings Delivery 🌌")
 
 # Section for entering in-character phone number
 phone_number = st.text_input("Enter your in-character phone number", "")
+
+# Section for entering delivery location
+delivery_location = st.text_input("Delivery Location", "")
 
 order = {}
 
@@ -73,14 +76,14 @@ cols = st.columns(2)
 with cols[0]:
     st.subheader("🌅 Breakfast")
     for item, price in menu["Breakfast"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Breakfast", item)] = quantity
 
 with cols[1]:
     st.subheader("🍲 Starters")
     for item, price in menu["Starters"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Starters", item)] = quantity
 
@@ -90,14 +93,14 @@ cols = st.columns(2)
 with cols[0]:
     st.subheader("🍽️ Mains")
     for item, price in menu["Mains"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Mains", item)] = quantity
 
 with cols[1]:
     st.subheader("🍰 Desserts")
     for item, price in menu["Desserts"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Desserts", item)] = quantity
 
@@ -107,14 +110,14 @@ cols = st.columns(2)
 with cols[0]:
     st.subheader("🍹 Alcoholic Drinks")
     for item, price in menu["Alcoholic Drinks"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Alcoholic Drinks", item)] = quantity
 
 with cols[1]:
     st.subheader("🥤 Non-Alcoholic Drinks")
     for item, price in menu["Non-Alcoholic Drinks"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Non-Alcoholic Drinks", item)] = quantity
 
@@ -131,8 +134,7 @@ if st.button("Submit Order"):
     st.subheader("Order Summary")
     st.markdown(order_summary)
 
-    if send_order_to_discord(phone_number, order_summary, total_price):
-        st.success("Order sent successfully to Discord!")
+    if send_order_to_discord(phone_number, delivery_location, order_summary, total_price):
+        st.success("Order sent successfully to Sightings!")
     else:
-        st.error("Failed to send order to Discord.")
-
+        st.error("Failed to send order to Sightings.")
